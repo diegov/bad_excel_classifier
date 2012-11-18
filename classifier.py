@@ -133,7 +133,7 @@ class TrainingCell(object):
         for value_class in self.value_classes:
             value_class.bad(cell_value)
         for type_class in self.type_classes:
-            type_class.good(cell_type)
+            type_class.bad(cell_type)
 
     def score(self, cell_type, cell_value):
         probs = []

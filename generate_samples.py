@@ -10,13 +10,14 @@ date_style.num_format_str = excel_date_fmt
 def identifier():
     return 'ID' + str(random.random())[-5:]
 
-def value(start, end):
+def value(start, end, integer=False):
     initial = random.random()
     has_value = random.choice([True] * 9 + [False])
     
     if has_value:
         size = end - start
-        return start + (initial * size)
+        final = start + (initial * size)
+        return int(final) if integer else final
     else:
         return ''
 
@@ -25,7 +26,7 @@ def write_doc(name, random_swap=False):
     sheet = wbk.add_sheet('sheet 1')
 
     cols = {0: ('CODE', lambda: (identifier(), None)),
-            1: ('Date', lambda: (value(40500, 41000), date_style)),
+            1: ('Date', lambda: (value(40500, 41000, integer=True), date_style)),
             2: ('Wat', lambda: (value(1, 16), None)),
             3: ('Price', lambda: (value(10, 16), None)),
             4: ('Other', lambda: (value(20, 4000), None))}
@@ -53,7 +54,7 @@ def write_doc(name, random_swap=False):
     wbk.save(name)
 
 if __name__ == '__main__':
-    for i in range(0, 60):
+    for i in range(0, 1000):
         name = 'random_generated/training/training' + str(i) + '.xls'
         write_doc(name)
 

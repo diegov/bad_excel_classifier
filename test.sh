@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-rm random_generated/*xls
-rm random_generated/training/*xls
-rm random_generated/verification/*xls
+rm random_generated/*xls 2>/dev/null
+rm random_generated/training/*xls 2>/dev/null
+rm random_generated/verification/*xls 2>/dev/null
 
 ./generate_samples.py 
 
@@ -22,15 +22,15 @@ train()
     done
 }
 
-find good/training -type f -name "*\.xls" | train good
+find good/training -type f -name "*.xls" | train good
 
-find random_generated -type f -name "training*\.xls" | train good
+find random_generated -type f -name "training*.xls" | train good
 
-find bad/training -type f -name "*\.xls" | train bad
+find bad/training -type f -name "*.xls" | train bad
 
-find misc_samples/training -type f -name "*\.xls" | train bad
+find misc_samples/training -type f -name "*.xls" | train bad
 
-find -maxdepth 3 -type f -name "*\.xls" | grep -v "training" | while read l; 
+find -maxdepth 3 -type f -name "*.xls" | grep -v "training" | while read l; 
 do
     python classifier.py --verify test.set "$l" --show-grid
 done
